@@ -49,11 +49,13 @@ public class RabbitMQProducer {
 //        channel.queueDeclare(QUEUE_NAME, true, false, false, Maps.newHashMap());
         channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);
 
-        String message = "Hello WoW1";
+        String message = "Hello World";
+        String returnMessage = "Return Message";
 
 //        AMQP.BasicProperties properties = new AMQP.BasicProperties.Builder().deliveryMode(2).priority(1).build();
         channel.confirmSelect();
         channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, true, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
+        channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY + "123", true, MessageProperties.PERSISTENT_TEXT_PLAIN, returnMessage.getBytes());
 
 
         TimeUnit.SECONDS.sleep(3);

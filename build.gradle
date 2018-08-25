@@ -30,4 +30,8 @@ subprojects {
                 "junit:junit:4.11"
         )
     }
+
+    test {
+        testLogging.showStandardStreams = true
+    }
 }
