@@ -1,0 +1,10 @@
+dependencies {
+    compile project(":core")
+    compile(
+            "org.apache.kafka:kafka-clients:${kafkaVersion}"
+    )
+}
+
+jar {
+    baseName = "${baseJarName}kafka"
+}

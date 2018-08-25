@@ -1,0 +1,5 @@
+archivesBaseName = 'core'
+
+jar {
+    baseName = "${baseJarName}core"
+}

@@ -1,0 +1,10 @@
+dependencies {
+    compile project(":core")
+    compile(
+            "com.rabbitmq:amqp-client:${rabbitmqVersion}"
+    )
+}
+
+jar {
+    baseName = "${baseJarName}rabbitmq"
+}
