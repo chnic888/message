@@ -5,11 +5,13 @@ import com.rabbitmq.client.ConfirmListener;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MessageProperties;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+@Slf4j
 public class RabbitMQProducer {
 
     private static final String EXCHANGE_NAME = "demo_exchange_1";
@@ -19,7 +21,7 @@ public class RabbitMQProducer {
     private static final String ROUTING_KEY = "demo_routing_key";
 
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
-        System.out.println("Start MQ Producer...");
+        log.info("RabbitMQProducer Start...");
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setVirtualHost("/");
         connectionFactory.setHost("node2");
@@ -30,18 +32,18 @@ public class RabbitMQProducer {
 
         channel.addReturnListener((replyCode, replyText, exchange, routingKey, properties, body) -> {
             String returnMessage = new String(body);
-            System.out.println("Basic.Return：" + returnMessage);
+            log.info("Basic.Return：{}", returnMessage);
         });
 
         channel.addConfirmListener(new ConfirmListener() {
             @Override
-            public void handleAck(long deliveryTag, boolean multiple) throws IOException {
-                System.out.println("Basic.Ack: " + deliveryTag);
+            public void handleAck(long deliveryTag, boolean multiple) {
+                log.info("Basic.Ack：{}", deliveryTag);
             }
 
             @Override
-            public void handleNack(long deliveryTag, boolean multiple) throws IOException {
-                System.out.println("Basic.Nack: " + deliveryTag);
+            public void handleNack(long deliveryTag, boolean multiple) {
+                log.info("Basic.Nack：{}", deliveryTag);
             }
         });
 
@@ -62,6 +64,6 @@ public class RabbitMQProducer {
 
         channel.close();
         connection.close();
-        System.out.println("Send Success...");
+        log.info("Send Success...");
     }
 }
