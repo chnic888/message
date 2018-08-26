@@ -19,7 +19,8 @@ subprojects {
 
     dependencies {
         compile(
-                "com.google.guava:guava:19.0"
+                "com.google.guava:guava:19.0",
+                "ch.qos.logback:logback-classic:1.2.3"
         )
 
         compileOnly(

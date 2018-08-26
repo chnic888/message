@@ -1,6 +1,7 @@
 .gradle
 */build/
 /log/
+*/out/
 !gradle/wrapper/gradle-wrapper.jar
 
 # Compiled class file

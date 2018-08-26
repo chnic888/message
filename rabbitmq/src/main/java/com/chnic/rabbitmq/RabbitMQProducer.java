@@ -22,7 +22,7 @@ public class RabbitMQProducer {
         System.out.println("Start MQ Producer...");
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setVirtualHost("/");
-        connectionFactory.setHost("node1");
+        connectionFactory.setHost("node2");
         connectionFactory.setPort(5672);
 
         Connection connection = connectionFactory.newConnection();
