@@ -6,7 +6,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Optional;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 
 @Slf4j
 public class Producer {
@@ -26,7 +25,6 @@ public class Producer {
         properties.put("buffer.memory", 33554432);
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-//        properties.put("partitioner.class", "com.chnic.kafka.producer.TestPartitioner");
 
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
         ProducerRecord<String, String> producerRecord = new ProducerRecord<>(TOPIC_NAME, "key1", "value1");
