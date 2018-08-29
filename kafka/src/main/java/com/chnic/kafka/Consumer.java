@@ -3,6 +3,7 @@ package com.chnic.kafka;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.errors.WakeupException;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -24,6 +25,17 @@ public class Consumer {
         properties.put("auto.commit.interval.ms", "3000");
 
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            log.info("Shutdown.....");
+            kafkaConsumer.wakeup();
+
+            try {
+                Thread.currentThread().join();
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+            }
+        }));
+
         kafkaConsumer.subscribe(Collections.singletonList(TOPIC_NAME));
 
         //subscribe topic by regex
@@ -36,6 +48,8 @@ public class Consumer {
                     log.info("partition: {}, offset: {}, key {}, value: {}", record.partition(), record.offset(), record.key(), record.value());
                 });
             }
+        } catch (WakeupException e) {
+            log.error(e.getMessage());
         } finally {
             kafkaConsumer.close();
             log.info("Consumer End...");
