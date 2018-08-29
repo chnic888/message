@@ -54,7 +54,7 @@ public class LogProducer {
                     }
                 });
 
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(1);
             }
         } finally {
             kafkaProducer.close();
